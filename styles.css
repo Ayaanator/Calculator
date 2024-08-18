@@ -20,6 +20,18 @@ body {
     padding: 10px;
 }
 
+.num {
+    background-color: beige;
+}
+
+.operand {
+    background-color: plum;
+}
+
+.action {
+    background-color: cadetblue;
+}
+
 button {
     flex-basis: 10px;
     flex-grow: 2;
