@@ -77,14 +77,16 @@ operands.forEach(ops => {
         } else {
             let num2 = Number(field.textContent.split(`${prev_op}`)[1].trim());
             console.log(num2);
+            result = operate(prev_op, num1, num2);
 
             if(ops.textContent === "=") {
-                field.textContent = operate(prev_op, num1, num2);
+                field.textContent = result;
             } else {
-                field.textContent = `${operate(prev_op, num1, num2)} ${ops.textContent} `;
+                field.textContent = `${result} ${ops.textContent} `;
+                prev_op = ops.textContent;
             }
 
-            operand_active = false;
+            num1 = result;
         }
     })
 })
