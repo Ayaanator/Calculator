@@ -1,4 +1,5 @@
 let operand_active = false;
+let decimal_active = false;
 let num1;
 let num2;
 let prev_op;
@@ -35,6 +36,7 @@ function operate(operator, num1, num2) {
 function action(val) {
     if(val === "AC") {
         field.textContent = "";
+        decimal_active = false;
     } else if (val === "DEL") {
         field.textContent = field.textContent.slice(0, -1);
     } else if (val === "%") {
@@ -54,7 +56,15 @@ const field = document.querySelector(".field");
 const numbers = Array.from(document.querySelectorAll(".num"));
 numbers.forEach(num => {
     num.addEventListener("click", () => {
-        field.textContent += num.textContent;
+        if(num.textContent != ".") {
+            field.textContent += num.textContent;
+        } else {
+            if(decimal_active === false) {
+                field.textContent += num.textContent;
+                decimal_active = true;
+            }
+        }
+        
     })
 })
 
@@ -73,6 +83,7 @@ operands.forEach(ops => {
             field.textContent += `${" " + ops.textContent + " "}`;
 
             operand_active = true;
+            decimal_active = false;
             prev_op = ops.textContent;
         } else {
             let num2 = Number(field.textContent.split(`${prev_op}`)[1].trim());
@@ -87,6 +98,7 @@ operands.forEach(ops => {
             }
 
             num1 = result;
+            decimal_active = false;
         }
     })
 })
