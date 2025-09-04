@@ -1,5 +1,6 @@
 let operand_active = false;
 let decimal_active = false;
+let answered = false;
 let num1;
 let num2;
 let prev_op;
@@ -57,9 +58,14 @@ const numbers = Array.from(document.querySelectorAll(".num"));
 numbers.forEach(num => {
     num.addEventListener("click", () => {
         if(num.textContent != ".") {
+            if(field.textContent != "" && answered == true) {
+                field.textContent = "";
+                answered = false;
+            }
+
             field.textContent += num.textContent;
         } else {
-            if(decimal_active === false) {
+            if(decimal_active === false && answered == false) {
                 field.textContent += num.textContent;
                 decimal_active = true;
             }
@@ -83,6 +89,7 @@ operands.forEach(ops => {
             field.textContent += `${" " + ops.textContent + " "}`;
 
             operand_active = true;
+            answered = false;
             decimal_active = false;
             prev_op = ops.textContent;
         } else {
@@ -92,6 +99,7 @@ operands.forEach(ops => {
 
             if(ops.textContent === "=") {
                 field.textContent = result;
+                answered = true;
             } else {
                 field.textContent = `${result} ${ops.textContent} `;
                 prev_op = ops.textContent;
@@ -99,6 +107,7 @@ operands.forEach(ops => {
 
             num1 = result;
             decimal_active = false;
+            operand_active = false;
         }
     })
 })
